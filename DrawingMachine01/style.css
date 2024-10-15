@@ -1,0 +1,115 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent scrolling */
+  height: 100%; /* Full height */
+  font-family: 'Inter', sans-serif; /* Use Google Font Inter */
+  font-weight: 400; /* Regular weight */
+  background-color: #000; /* Dark background for the UI */
+  color: #fff; /* White text color for visibility */
+}
+
+#controls {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  width: 280px; /* fixed width */
+  padding: 32px;
+  background-color: #000; /* Dark background for the sidebar */
+  border-radius: 16px; /* Rounded corners */
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Consistent gap between sections */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Consistent gap between sliders and labels */
+}
+
+label {
+  font-size: 14px; /* Uniform font size for labels */
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.main-label {
+  font-size: 20px; /* Larger size for main labels */
+  text-transform: uppercase; /* Keep uppercase styling */
+  margin-top: 8px; /* Space below the label */
+  margin-bottom: 16px; /* Space below the label */
+  font-weight: 300; /* Light */
+}
+
+/* Wrapper for all sliders */
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px; /* Consistent margin below each slider */
+}
+
+select {
+  width: 100%;
+  background-color: transparent; /* No fill */
+  color: #fff; /* White text */
+  border: 1px solid #fff; /* White border of 1px */
+  padding: 16px;
+  padding-right: 40px; /* Extra padding for the chevron */
+  border-radius: 0; /* No rounded corners */
+  font-weight: 400; /* Regular weight */
+  appearance: none; /* Remove default chevron */
+  -webkit-appearance: none; /* Remove default chevron for WebKit browsers */
+
+  /* Add a custom chevron */
+  background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E') no-repeat right 12px center;
+  background-size: 16px;
+}
+
+input[type=range] {
+  -webkit-appearance: none; /* Removes default appearance */
+  appearance: none;
+  width: 100%;
+  height: 2px; /* True 1px line */
+  background: #dddddd; /* Track background color */
+  border-radius: 0;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -1px; /* Center thumb on 1px track */
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-runnable-track,
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 1px;
+  background: #ffffff;
+  border-radius: 0;
+}
+
+#setBgButton {
+  display: none;
+}
+
+.project-credit {
+  font-size: 14px;
+  color: #acacac; /* Grey text */
+  text-align: left; /* Center the text */
+  margin-top: 16px; /* Space above the text */
+  font-weight: 300;
+}

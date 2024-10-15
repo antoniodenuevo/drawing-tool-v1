@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Drawing Tool v1</title>
+
+  <!-- Link to external stylesheet for custom styles -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300,400&display=swap" rel="stylesheet">
+
+  <!-- p5.js libraries -->
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.dom.min.js"></script>
+
+</head>
+
+<body>
+  <!-- UI Controls -->
+  <div id="controls">
+    <!-- Left Column: Background controls -->
+    <div class="column">
+      <label for="background" class="main-label">Background</label>
+      <div class="slider-container">
+        <label for="rSlider">Red</label>
+        <input type="range" id="rSlider" min="0" max="255" value="224">
+      </div>
+      <div class="slider-container">
+        <label for="gSlider">Green</label>
+        <input type="range" id="gSlider" min="0" max="255" value="5">
+      </div>
+      <div class="slider-container">
+        <label for="bSlider">Blue</label>
+        <input type="range" id="bSlider" min="0" max="255" value="0">
+      </div>
+      <button id="setBgButton">Set Background Color</button>
+    </div>
+
+    <!-- Right Column: Brush controls -->
+    <div class="column">
+      <label for="brushSelect" class="main-label">Brush</label>
+      <div class="slider-container">
+        <label for="brushSelect">Brush Type</label>
+        <select id="brushSelect">
+          <option value="1">Brush 1</option>
+          <option value="2">Brush 2</option>
+        </select>
+      </div>
+      <div class="slider-container">
+        <label for="strokeSlider">Stroke</label>
+        <input type="range" id="strokeSlider" min="1" max="10" value="1">
+      </div>
+      <div class="slider-container">
+        <label for="vtnrSlider">Sides</label>
+        <input type="range" id="vtnrSlider" min="100" max="400" value="100">
+      </div>
+      <div class="slider-container">
+        <label for="imgSelect">Style</label>
+        <select id="imgSelect">
+          <option value="1">Style 1</option>
+          <option value="2">Style 2</option>
+          <option value="3">Style 3</option>
+          <option value="4">Style 4</option>
+          <option value="5">Style 5</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Project Credit -->
+    <div class="project-credit">A project by Antonio De Nuevo</div>
+  </div>
+
+  <!-- p5.js sketch file -->
+  <script src="sketch.js"></script>
+
+  <!-- CCapture.js and related libraries for recording -->
+  <script src="./src/CCapture.js"></script>
+  <script src="./src/webm-writer-0.2.0.js"></script>
+  <script src="./src/download.js"></script>
+
+  <!-- Capturer setup for recording -->
+  <script>
+    let capturer = new CCapture({
+      format: 'webm',
+      framerate: 60,
+      verbose: true
+    });
+  </script>
+
+</body>
+
+</html>

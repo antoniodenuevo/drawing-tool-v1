@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Drawing Tool v1</title>
 
   <!-- Link to external stylesheet for custom styles -->
@@ -15,7 +14,6 @@
   <script src="libraries/p5.min.js"></script>
   <script src="libraries/p5.sound.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.dom.min.js"></script>
-
 </head>
 
 <body>
@@ -49,15 +47,21 @@
           <option value="2">Brush 2</option>
         </select>
       </div>
-      <div class="slider-container">
+
+      <!-- Stroke Slider -->
+      <div class="slider-container" id="stroke-container">
         <label for="strokeSlider">Stroke</label>
         <input type="range" id="strokeSlider" min="1" max="10" value="1">
       </div>
-      <div class="slider-container">
+
+      <!-- Sides Slider -->
+      <div class="slider-container" id="sides-container">
         <label for="vtnrSlider">Sides</label>
         <input type="range" id="vtnrSlider" min="100" max="400" value="100">
       </div>
-      <div class="slider-container">
+
+      <!-- Style Dropdown -->
+      <div class="slider-container" id="style-container">
         <label for="imgSelect">Style</label>
         <select id="imgSelect">
           <option value="1">Style 1</option>
@@ -67,7 +71,21 @@
           <option value="5">Style 5</option>
         </select>
       </div>
+
+      <!-- Change Interval Slider -->
+      <div class="slider-container" id="interval-container">
+        <label for="intervalSlider">Change Interval</label>
+        <input type="range" id="intervalSlider" min="1" max="100" value="22">
+      </div>
+
+      <!-- Opacity Slider -->
+      <div class="slider-container" id="opacity-container">
+        <label for="opacitySlider">Opacity</label>
+        <input type="range" id="opacitySlider" min="0" max="255" value="255">
+      </div>
     </div>
+
+    <button id="saveButton" class="save-button">SAVE ARTWORK</button>
 
     <!-- Project Credit -->
     <div class="project-credit">A project by Antonio De Nuevo</div>
@@ -81,15 +99,8 @@
   <script src="./src/webm-writer-0.2.0.js"></script>
   <script src="./src/download.js"></script>
 
-  <!-- Capturer setup for recording -->
-  <script>
-    let capturer = new CCapture({
-      format: 'webm',
-      framerate: 60,
-      verbose: true
-    });
-  </script>
+  <!-- JS for controlling UI visibility -->
+  <script src="ui-controls.js"></script>
 
 </body>
-
 </html>

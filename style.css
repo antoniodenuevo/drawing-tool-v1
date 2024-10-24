@@ -113,3 +113,28 @@ input[type=range]::-moz-range-track {
   margin-top: 16px; /* Space above the text */
   font-weight: 300;
 }
+
+/* Save Button Styling */
+#saveButton {
+  font-size: 16px; /* Larger font size */
+  text-transform: uppercase; /* Make the text uppercase like other labels */
+  font-weight: 300; /* Light weight to match other styles */
+  padding: 16px; /* Increase padding to make the button larger */
+  background-color: #FFFFFF; /* Dark background to fit the overall theme */
+  color: #000000; /* White text */
+  border: 0px solid #fff; /* White border */
+  cursor: pointer; /* Make the button look clickable */
+  margin-top: 16px; /* Add space above the button */
+  width: 100%; /* Ensure the button takes the full width */
+}
+
+#saveButton:hover {
+  background-color: #dddddd; /* Slightly lighter background on hover */
+}
+
+#controls, #controls * {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer/Edge */
+  user-select: none;         /* Non-prefixed version for other browsers */
+}

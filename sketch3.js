@@ -1,32 +1,39 @@
 let curPos, mousePos;
 let brushType = 1, brushStroke = 1, vtnr = 100;
-let colorArray = [];  // To store precomputed colors
-let currentColor;
-let frameCounter = 0;
-let changeInterval = 2;
-let jsonData; // Store JSON data
+let img, img2, c;
 let bgColor = { r: 76, g: 112, b: 255 };  // Initial background color
-let opacity = 255;  // Default opacity
+let frameCounter = 0;
+let changeInterval = 55;
+
+let colorArray = [];  // To store precomputed colors
+let numColors = 5;  // Number of colors to precompute
+let currentColor;
 
 function preload() {
-  // Load the colors.json file
-  jsonData = loadJSON('colors.json');
+  colorArray = [
+    [0, 103, 90],
+    [255, 107, 67],
+    [245, 171, 196],
+    [219, 235, 25],
+    [0, 65, 91]
+  ];
+  img1 = loadImage('assets/1.jpg');
+  img2 = loadImage('assets/2.jpg');
+  img3 = loadImage('assets/3.jpg');
+  img4 = loadImage('assets/4.jpg');
+  img5 = loadImage('assets/5.jpg');
+  img = img1;  // Default image
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  currentColor = random(colorArray);
+
 
   // Set the initial background color
   background(bgColor.r, bgColor.g, bgColor.b);
+  c = img.get(random(width), random(height)); // Assign initial color
 
-  let opacitySlider = select('#opacitySlider');  // Grab the opacity slider from HTML
-  opacitySlider.input(() => {
-    opacity = opacitySlider.value();  // Update opacity value when slider changes
-  });
-
-  // Set the initial colors from img1 in the JSON
-  colorArray = jsonData.img1;
-  currentColor = random(colorArray);  // Assign initial color
 
   curPos = createVector(0, 0);
   mousePos = createVector(0, 0);
@@ -40,70 +47,73 @@ function setup() {
   let strokeSlider = select('#strokeSlider');
   let vtnrSlider = select('#vtnrSlider');
   let imgSelect = select('#imgSelect');
-  let intervalSlider = select('#intervalSlider');  // New interval slider
 
-  // Set background color when sliders are adjusted
+  // Set background color when sliders are adjusted (auto-trigger "Set Background Color")
   rSlider.input(updateBackground);
   gSlider.input(updateBackground);
   bSlider.input(updateBackground);
+
+  // Set background color when the button is clicked
   setBgButton.mousePressed(updateBackground);
-
-  let saveButton = select('#saveButton');
-  saveButton.mousePressed(() => {
-    save('my-drawing.jpg');  // Save the canvas as 'my-drawing.jpg'
-  });
-
-  // Update the interval for color change
-  intervalSlider.input(() => {
-    changeInterval = intervalSlider.value();
-  });
 
   // Change brush type based on selection
   brushSelect.changed(() => {
     brushType = int(brushSelect.value());
   });
 
+  // Change brush stroke based on slider input
   strokeSlider.input(() => {
     brushStroke = strokeSlider.value();
   });
 
+  // Change vertex count for brush 1 based on slider input
   vtnrSlider.input(() => {
     vtnr = vtnrSlider.value();
   });
 
-  // Change the color set when a different image (style) is selected
+  // Change the image used for drawing
   imgSelect.changed(() => {
     let selectedImage = imgSelect.value();
     switch (selectedImage) {
       case '1':
-        colorArray = jsonData.img1;
+        img = img1;
         break;
       case '2':
-        colorArray = jsonData.img2;
+        img = img2;
         break;
       case '3':
-        colorArray = jsonData.img3;
+        img = img3;
         break;
       case '4':
-        colorArray = jsonData.img4;
+        img = img4;
         break;
       case '5':
-        colorArray = jsonData.img5;
+        img = img5;
         break;
     }
-    currentColor = random(colorArray);  // Assign new color after selection
+
+    // Preload random colors from the selected image
+    colorArray = [];
+    for (let i = 0; i < numColors; i++) {
+      colorArray.push(img.get(random(img.width), random(img.height)));
+    }
   });
 }
 
 function draw() {
-  frameCounter++;
+  changeInterval = random(2);
+
+
+  frameCounter++; // Increment frame counter
+  // Drawing logic
 
   if (frameCounter >= changeInterval) {
-    currentColor = random(colorArray);  // Pick a new color from the array
+    currentColor = random(colorArray);  // Pick a color from the precomputed array
     frameCounter = 0;
   }
 
-  fill(currentColor[0], currentColor[1], currentColor[2], opacity);
+  // Use the currentColor for drawing
+  fill(currentColor);
 
   mousePos.set(mouseX, mouseY);
   let displacement = p5.Vector.sub(mousePos, curPos).mult(0.1);
@@ -111,7 +121,7 @@ function draw() {
 
   curPos.add(displacement);
 
-  if (mouseIsPressed && !isMouseOverUI()) {
+  if (mouseIsPressed) {
     switch (brushType) {
       case 1:
         noisyShape(curPos.x, curPos.y, vtnr, 10, magnitude, brushStroke);
@@ -119,33 +129,40 @@ function draw() {
       case 2:
         drawANoisyLine(mouseX, mouseY, 90, brushStroke);
         break;
+      // case 3:
+      //     Commented out Brush 3
+      //     noisyShape2(curPos.x, curPos.y, 200, 10, magnitude, brushStroke);
+      //     break;
     }
   }
 }
 
-// Update background color based on sliders
+// Update background color based on slider values
 function updateBackground() {
   bgColor.r = select('#rSlider').value();
   bgColor.g = select('#gSlider').value();
   bgColor.b = select('#bSlider').value();
-  background(bgColor.r, bgColor.g, bgColor.b);
+  background(bgColor.r, bgColor.g, bgColor.b);  // Update the background color live
 }
 
 // Brush 1: Noisy Shape
 function noisyShape(ox, oy, vertNum, radius, noiseAmplitude, strokeWeight) {
   let angleStep = 360.0 / vertNum;
+
   push();
   translate(ox, oy);
   noStroke();
-  fill(currentColor[0], currentColor[1], currentColor[2], opacity);
+  fill(currentColor);
 
   beginShape();
   for (let vn = 0; vn < vertNum; vn++) {
     let vX = cos(radians(angleStep * vn));
     let vY = sin(radians(angleStep * vn));
     let noiseValue = noise(frameCount * 10 + vn);
+
     vX += noiseValue * (vX * noiseAmplitude);
     vY += noiseValue * (vY * noiseAmplitude);
+
     vertex(vX * radius, vY * radius);
   }
   endShape(CLOSE);
@@ -168,7 +185,26 @@ function drawANoisyLine(mx, my, amplitude, st) {
   pop();
 }
 
-// Check if mouse is over UI to prevent drawing
-function isMouseOverUI() {
-  return document.querySelector('#controls').contains(document.elementFromPoint(mouseX, mouseY));
-}
+// Brush 3: Commented Out
+// function noisyShape2(ox, oy, vertNum, radius, noiseAmplitude) {
+//   let angleStep = 360.0 / vertNum;
+
+//   push();
+//   translate(ox, oy);
+//   stroke(0);
+//   noFill();
+
+//   beginShape();
+//   for (let vn = 0; vn < vertNum; vn++) {
+//     let vX = cos(radians(angleStep * vn));
+//     let vY = sin(radians(angleStep * vn));
+//     let noiseValue = noise(frameCount * 1 + vn);
+
+//     vX += noiseValue * (vX * noiseAmplitude);
+//     vY += noiseValue * (vY * noiseAmplitude);
+
+//     vertex(vX * radius, vY * radius);
+//   }
+//   endShape(CLOSE);
+//   pop();
+// }

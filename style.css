@@ -124,7 +124,7 @@ input[type=range]::-moz-range-track {
   color: #000000; /* White text */
   border: 0px solid #fff; /* White border */
   cursor: pointer; /* Make the button look clickable */
-  margin-top: 16px; /* Add space above the button */
+  margin-top: 0px; /* Add space above the button */
   width: 100%; /* Ensure the button takes the full width */
 }
 
@@ -137,4 +137,22 @@ input[type=range]::-moz-range-track {
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* Internet Explorer/Edge */
   user-select: none;         /* Non-prefixed version for other browsers */
+}
+
+/* Gradient Checkbox Styling */
+#gradientToggle {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: black;  /* Makes the checkbox black */
+  margin-right: 8px; /* Spacing between checkbox and label */
+}
+
+#gradientToggleLabel {
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
